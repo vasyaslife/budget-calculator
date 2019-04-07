@@ -1,26 +1,60 @@
-let money = +prompt('Ваш бюджет на месяц?', ''),
-    time = prompt('Введите дату в формате YYYY-MM-DD?', ''); // The DD is only 30 days max
-
-
 let appData = {
-    budget: money,
-    timeData: time,
+    budget: 0,
+    date: '',
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: false
+    savings: false,
+
+    dateValid: function () {
+        let day = this.getDay(), 
+            month = this.getMonth(), 
+            year = this.getYear(),
+            date = appData.date;
+
+        if ( (isNatural(day) && day <= 30) && 
+        (isNatural(month) && month <= 12) && 
+        (isNatural(year)) &&
+        (appData.date.length == 10) &&
+        (date.charAt(4) == '-' && date.charAt(7) == '-') ) {
+            return 1;
+        }
+
+        return 0;
+    },
+
+    getDay: function () {
+        return +appData.date.slice(-2);
+    },
+
+    getMonth: function () {
+        return +appData.date.slice(5, 7);
+    },
+
+    getYear: function () {
+        return +appData.date.slice(0, 4);
+    }
 };
 
-for (let i = 0; i < 2; i++) {
-    appData.expenses[prompt('Введите обязательную статью расходов в этом месяце', '')] = prompt('Во сколько обойдется?', '');
+function isNatural (num) {
+    if (Number.isInteger(num) &&  num > 0 ) {
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
-//getting user's date
-appData.dayToday = appData.timeData.slice(-2);
+//budget validation check
+do {
+    appData.budget = +prompt('Ваш бюджет на месяц?', '');
+} while (!isNatural(appData.budget));
+
+//date validation check
+do {
+    appData.date = prompt('Введите дату в формате YYYY-MM-DD?', '');
+} while (!appData.dateValid());
 
 
-if (!isNaN(appData.dayToday) && +appData.dayToday > 0 +appData.dayToday < 31 && +appData.budget > 0) {
-    alert('Ваш бюджет на день, округленный до двух цифр после запятой: ' + (appData.budget / (31 - appData.dayToday)).toFixed(2));
-} else {
-    alert('Введены некорректные данные даты');
-}
+
+
+
