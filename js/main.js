@@ -6,7 +6,7 @@ let appData = {
     income: [],
     savings: false,
 
-    dateValid: function () {
+    validDate: function () {
         let day = this.getDay(),
             month = this.getMonth(),
             year = this.getYear(),
@@ -35,7 +35,7 @@ let appData = {
         return +this.date.slice(0, 4);
     },
 
-    budgetPerDay: function () {
+    getBudgetPerDay: function () {
         let budget = 0, 
             budgetForMonth = this.budget;
 
@@ -79,7 +79,7 @@ do {
 //date validation check
 do {
     appData.date = prompt('Введите дату в формате YYYY-MM-DD?', '');
-} while (!appData.dateValid());
+} while (!appData.validDate());
 
 //expenses validation check
 for (let i = 0; i < 2;) {
@@ -98,5 +98,5 @@ for (let i = 0; i < 2;) {
     }
 }
 
-appData.budgetPerDay();
+appData.getBudgetPerDay();
 
