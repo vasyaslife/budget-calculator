@@ -2,7 +2,7 @@ let appData = {
     budget: 0,
     date: '',
     expenses: {},
-    optionalExpenses: {},
+    optionalExpenses: [],
     income: [],
     savings: false,
 
@@ -60,6 +60,38 @@ let appData = {
         } else if ( budget === 0) {
             alert('У вас нет бюджета');
         }
+    },
+
+    getOptionalExpenses: function () {
+        let i = 0;
+
+        //expenses validation check
+        while (i == 0) {
+            let value = prompt('Статья необязательных расходов?', '');
+
+            if (!!value && appData.isZeroToTen(value))  {
+                this.optionalExpenses[this.optionalExpenses.length] = value;
+                i++;
+            }
+        }
+    },
+
+    isZeroToTen: function (value) {
+        let firstChar = value.charAt(0);
+        if (firstChar != 0 &&
+        firstChar != 1 &&
+        firstChar != 2 &&
+        firstChar != 3 &&
+        firstChar != 4 &&
+        firstChar != 5 &&
+        firstChar != 6 &&
+        firstChar != 7 &&
+        firstChar != 8 &&
+        firstChar != 9) {
+            return 1;
+        }
+
+        return 0;
     }
 };
 
@@ -98,5 +130,6 @@ for (let i = 0; i < 2;) {
     }
 }
 
+appData.getOptionalExpenses();
 appData.getBudgetPerDay();
 
