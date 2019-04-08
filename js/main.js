@@ -4,7 +4,7 @@ let appData = {
     expenses: {},
     optionalExpenses: [],
     income: [],
-    savings: false,
+    savings: true,
 
     validDate: function () {
         let day = this.getDay(),
@@ -37,11 +37,7 @@ let appData = {
 
     getBudgetPerDay: function () {
         let budget = 0, 
-            budgetForMonth = this.budget;
-
-        for (let key in appData.expenses) {
-            budgetForMonth -= appData.expenses[key];
-        }
+            budgetForMonth = this.getBudgetForMonth();
 
         if (budgetForMonth !== 0) {
             budget = (budgetForMonth / (31 - appData.getDay())).toFixed(2);
@@ -62,7 +58,21 @@ let appData = {
         }
     },
 
-    getOptionalExpenses: function () {
+    getBudgetPerMonth: function () {
+        alert('Ваш бюджет на месяц: ' + this.getBudgetForMonth());
+    },
+
+    getBudgetForMonth: function () {
+        let budgetForMonth = this.budget;
+
+        for (let key in appData.expenses) {
+            budgetForMonth -= appData.expenses[key];
+        }
+
+        return budgetForMonth;
+    },
+
+    takeOptionalExpenses: function () {
         let i = 0;
 
         //expenses validation check
@@ -92,6 +102,25 @@ let appData = {
         }
 
         return 0;
+    },
+
+    checkSavings: function () {
+        if (this.savings == true) {
+            let save = +prompt('Какова сумма накопленний?'),
+                percent = +prompt('Под какой процент?');
+
+                while (!(isFinite(save) && !!save)) {
+                    save = +prompt('Какова сумма накопленний?');
+                }
+
+                while (!(isFinite(percent) && !!percent)) {
+                    percent = +prompt('Какова сумма накопленний?');
+                }
+
+
+                this.monthIncome = (save / 100 / 12 * percent).toFixed(2);
+                alert('Дохов в месяц с вашего депозита: ' + this.monthIncome + '\nРезультат округлен до двух цифр после запятой.');
+        }
     }
 };
 
@@ -119,7 +148,6 @@ for (let i = 0; i < 2;) {
         value;
 
     if (!!key) {
-        appData[key] = 0;
 
         do {
             value = +prompt('Во сколько обойдется?', '');
@@ -130,6 +158,9 @@ for (let i = 0; i < 2;) {
     }
 }
 
-appData.getOptionalExpenses();
+// appData.takeOptionalExpenses(); // Use when need to take optional expenses
+
+// appData.checkSavings (); //Use when need to set a month income from savings
+appData.getBudgetPerMonth();
 appData.getBudgetPerDay();
 
