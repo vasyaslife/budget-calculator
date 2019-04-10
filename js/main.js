@@ -106,20 +106,89 @@ let appData = {
 
     checkSavings: function () {
         if (this.savings == true) {
-            let save = +prompt('Какова сумма накопленний?'),
+            let save = +prompt('Какова сумма накоплений?'),
                 percent = +prompt('Под какой процент?');
 
                 while (!(isFinite(save) && !!save)) {
-                    save = +prompt('Какова сумма накопленний?');
+                    save = +prompt('Какова сумма накоплений?');
                 }
 
                 while (!(isFinite(percent) && !!percent)) {
-                    percent = +prompt('Какова сумма накопленний?');
+                    percent = +prompt('Какова сумма накоплений?');
                 }
 
 
                 this.monthIncome = (save / 100 / 12 * percent).toFixed(2);
-                alert('Дохов в месяц с вашего депозита: ' + this.monthIncome + '\nРезультат округлен до двух цифр после запятой.');
+                alert('Доход в месяц с вашего депозита: ' + this.monthIncome +
+                 '\nРезультат округлен до двух цифр после запятой.');
+        }
+    },
+
+    chooseIncome: function () {
+        let incomeItems = prompt('Что принесет вам дополнительный доход? (Перечислите через запятую)', '');
+
+        while ( !(!!incomeItems) ) {
+            incomeItems = prompt('Что принесет вам дополнительный доход? (Перечислите через запятую)', '');
+        }
+
+        this.income = incomeItems.split(', ');
+        incomeItems = prompt('Может что-то еще?', '');
+
+        while ( !(!!incomeItems) ) {
+            incomeItems = prompt('Может что-то еще?', '');
+        }
+
+        this.income.push(incomeItems);
+        this.income.sort();
+    },
+
+    showIncome: function () {  
+        let incomeText = '';
+
+            appData.income.forEach(function(item, i) {
+                incomeText += (++i) + ') ' + item +  '\n';
+            });
+
+        alert('Способы доп. заработка: \n' + incomeText); 
+    },
+
+    showAllInfo: function () {
+        let infoText = '';
+
+        for (let key in this) {
+            
+            infoText += key + ' значение: ' + this[key] + '\n';
+        }
+
+        alert('Наша программа включает в себя данные: \n' + infoText);
+    },
+
+    takeBudget: function () {
+        do {
+            appData.budget = +prompt('Ваш бюджет на месяц?', '');
+        } while (!isNatural(appData.budget));
+    },
+
+    takeDate: function () {
+        do {
+            appData.date = prompt('Введите дату в формате YYYY-MM-DD?', '');
+        } while (!appData.validDate());
+    },
+
+    takeExpenses: function () {
+        for (let i = 0; i < 2;) {
+            let key = prompt('Введите обязательную статью расходов в этом месяце', ''),
+                value;
+        
+            if (!!key) {
+        
+                do {
+                    value = +prompt('Во сколько обойдется?', '');
+                } while (!isNatural(value));
+        
+                appData.expenses[key] = value;
+                i++;
+            }
         }
     }
 };
@@ -132,35 +201,16 @@ function isNatural(num) {
     return 0;
 }
 
-//budget validation check
-do {
-    appData.budget = +prompt('Ваш бюджет на месяц?', '');
-} while (!isNatural(appData.budget));
+appData.takeBudget();
+appData.takeDate();
+appData.takeExpenses();
 
-//date validation check
-do {
-    appData.date = prompt('Введите дату в формате YYYY-MM-DD?', '');
-} while (!appData.validDate());
+appData.takeOptionalExpenses(); // Use when need to take optional expenses
+appData.checkSavings (); //Use when need to set a month income from savings
 
-//expenses validation check
-for (let i = 0; i < 2;) {
-    let key = prompt('Введите обязательную статью расходов в этом месяце', ''),
-        value;
-
-    if (!!key) {
-
-        do {
-            value = +prompt('Во сколько обойдется?', '');
-        } while (!isNatural(value));
-
-        appData.expenses[key] = value;
-        i++;
-    }
-}
-
-// appData.takeOptionalExpenses(); // Use when need to take optional expenses
-
-// appData.checkSavings (); //Use when need to set a month income from savings
 appData.getBudgetPerMonth();
 appData.getBudgetPerDay();
 
+appData.chooseIncome();
+appData.showIncome();
+appData.showAllInfo();
