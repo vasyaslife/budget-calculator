@@ -190,6 +190,21 @@ let appData = {
                 i++;
             }
         }
+    },
+
+    takeInfo: function () {
+        this.startBtn = document.querySelector('#start');
+        this.valueBox = document.querySelector('.result__table').querySelectorAll('div');
+        this.dateInput = document.querySelectorAll('.time-data__input');
+        this.expensesInput = document.getElementsByClassName('expenses__item');
+        this.optionalExpensesInput = document.querySelectorAll('.optionalexpenses__item');
+        this.expensesAccept = document.getElementsByClassName('expenses__item-btn');
+        this.optionalExpensesAccept = document.getElementsByClassName('optionalexpenses__btn');
+        this.countBudgetAccept = document.getElementsByClassName('count-budget__btn');
+        this.incomeInpput = document.querySelector('.choose-income__item');
+        this.savingsCheck = document.querySelector('#savings');
+        this.savingsSumInput = document.querySelector('.checksavings__sum');
+        this.savingsPercentInput = document.querySelector('.checksavings__percent');
     }
 };
 
@@ -201,16 +216,18 @@ function isNatural(num) {
     return 0;
 }
 
-appData.takeBudget();
-appData.takeDate();
-appData.takeExpenses();
 
-appData.takeOptionalExpenses(); // Use when need to take optional expenses
-appData.checkSavings (); //Use when need to set a month income from savings
 
-appData.getBudgetPerMonth();
-appData.getBudgetPerDay();
+// appData.takeBudget();
+// appData.takeDate();
+// appData.takeExpenses();
 
-appData.chooseIncome();
-appData.showIncome();
-appData.showAllInfo();
+// appData.takeOptionalExpenses(); // Use when need to take optional expenses
+// appData.checkSavings (); //Use when need to set a month income from savings
+
+// appData.getBudgetPerMonth();
+// appData.getBudgetPerDay();
+
+// appData.chooseIncome();
+// appData.showIncome();
+// appData.showAllInfo();
