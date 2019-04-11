@@ -1,0 +1,157 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Ubuntu, sans-serif;
+    color: #262626;
+    font-size: 16px;
+    outline: 0;
+}
+
+#app {
+    background-color: #faf8f5;
+}
+
+.app__logo {
+    text-align: center;
+    height: 60px;
+    background-color: #fff;
+    line-height: 60px;
+    box-shadow: 0 1.5px 10px 0 rgba(1,0,42,.05);
+}
+
+.app__logo_color {
+    color: #ff6a30;
+}
+
+.title__h1 {
+    font-size: 20px;
+    text-align: center;
+    margin: 30px 0 0 0;
+}
+
+.app__main {
+    margin-top: 40px;
+}
+
+.main__data {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.data__text {
+    margin: 25px 0 13px 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.expenses__item {
+    width: calc((100%/2) - 4px);
+}
+
+.input__item {
+    height: 35px;
+    border-radius: 2.5px;
+    background-color: #fff;
+    box-shadow: 0 2.5px 10px 0 rgba(1,0,42,.1);
+    border: none;
+    font-size: 14px;
+    color: #a7a7a7;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.input__btn {
+    width: 70px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+    border: none;
+    border-radius: 2.5px;
+    background-image: linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff);
+    box-shadow: 0 2.5px 10px 0 rgba(1,0,42,.1);
+    color: #fff;
+    font-weight: 100;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.optionalexpenses__item {
+    width: calc((100%/3) - 4px);
+}
+
+.count-budget__btn {
+    width: 120px;
+}
+
+.choose-income__item {
+    width: 80%;
+}
+
+.checksavings__box {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 10px 0;
+}
+
+.checksavings__text {
+    margin: -7px 10px 0 0;
+}
+
+.checksavings__btn {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.checksavings_text_bottom {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.data__btn {
+    width: 200px;
+    height: 45px;
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.result__table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 400px;
+    margin-top: 58px;
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 1.5px 20px 0 rgba(1,0,42,.1);
+}
+
+.result__item {
+    width: 48%;
+    margin-top: 10px;
+    margin-bottom: 0;
+    min-height: 40px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.time-data {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.time-data__text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.time-data__input {
+    width: 80px;
+    height: 30px;
+    margin-left: 10px;
+}

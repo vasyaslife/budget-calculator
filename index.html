@@ -1,14 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Budget Calculator</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700&amp;subset=cyrillic" rel="stylesheet">
 </head>
 <body>
+    <section id="app">
+        <div class="app__logo">
+            <span class="app__logo_color">money</span>
+            keeper
+        </div>
+
+        <div class="container">
+            <div class="title">
+                <h1 class="title__h1">
+                    Расчет дневного бюджета
+                </h1>
+            </div>
+
+            <div class="app__main main">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="data main__data input">
+
+                            <div class="expenses main__expenses">
+                                <p class="data__text">
+                                    Введите обязательные расходы
+                                </p>
+                                <input class="expenses__item input__item" type="text" id="expenses_1" placeholder="Наименование">
+                                <input class="expenses__item input__item" type="text" id="expenses_2" placeholder="Цена">
+                                <input class="expenses__item input__item" type="text" id="expenses_3" placeholder="Наименование">
+                                <input class="expenses__item input__item" type="text" id="expenses_4" placeholder="Цена">
+                                <button class="expenses__item-btn input__btn">
+                                    Утвердить
+                                </button>
+                            </div>
+                            
+                            <div class="optionalexpenses">
+                                <p class="data__text">
+                                    Введите необязательные расходы
+                                </p>
+                                <input class="optionalexpenses__item input__item" type="text" id="optionalexpenses_1">
+                                <input class="optionalexpenses__item input__item" type="text" id="optionalexpenses_2">
+                                <input class="optionalexpenses__item input__item" type="text" id="optionalexpenses_3">
+                                <button class="optionalexpenses__btn input__btn">
+                                    Утвердить
+                                </button>
+                            </div>
+                            
+                            <div class="count-budget">
+                                <p class="data__text">
+                                    Расчет дневного бюджета
+                                </p>
+                                <button class="count-budget__btn input__btn">
+                                    Рассчитать
+                                </button>
+                            </div>
+                            
+                            <div class="choose-income">
+                                <p class="data__text">
+                                    Введите статьи возможного дохода через запятую
+                                </p>
+                                <input class="choose-income__item input__item" type="text" id="income">
+                            </div>
+
+                            <div class="checksavings">
+                                <div class="checksavings__box">
+                                        <p class="checksavings__text">
+                                            Есть ли накопления: 
+                                        </p>
+                                        <input id="savings" type="checkbox" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label for="sum" class="checksavings_text_bottom">Сумма</label>
+                                        <input class="checksavings__sum input__item checksavings__btn" id="sum" type="text">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="percent" class="checksavings_text_bottom">Процент</label>
+                                        <input class="checksavings__percent input__item checksavings__btn" id="percent" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="data__send">
+                                <button class="data__btn input__btn" id="start">
+                                    Начать расчет
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="result main__result">
+                            <div class="result__table">
+                                <p class="result__budget result__item">
+                                    Доход: 
+                                </p>
+                                <div class="result__budget-value result__item"></div>
+                    
+                                <p class="result__daybudget result__item">
+                                    Бюджет на 1 день: 
+                                </p>
+                                <div class="result__daybudget-value result__item"></div>
+                    
+                                <p class="result__level result__item">
+                                    Уровень дохода: 
+                                </p>
+                                <div class="result__level-value result__item"></div>
+                    
+                                <p class="result__expenses result__item">
+                                    Обязательные расходы: 
+                                </p>
+                                <div class="result__expenses-value result__item"></div>
+                    
+                                <p class="result__optionalexpenses result__item">
+                                    Возможные траты: 
+                                </p>
+                                <div class="result__optionalexpenses-value result__item"></div>
+                    
+                                <p class="result__income result__item">
+                                    Дополнительный доход: 
+                                </p>
+                                <div class="result__income-value result__item"></div>
+                    
+                                <p class="result__monthsavings result__item">
+                                    Накопления за 1 месяц:
+                                </p>
+                                <div class="result__monthsavings-value result__item"></div>
+                    
+                                <p class="result__yearsavings result__item">
+                                    Накопления за 1 год:
+                                </p>
+                                <div class="result__yearsavings-value result__item"></div>
+                            </div>
+
+                            <div class="time-data">
+                                <div class="time-data__year time-data__text">
+                                    Год:
+                                    <input class="time-data__year-value input__item time-data__input" type="text" readonly>
+                                </div>
+                                <div class="time-data__month time-data__text">
+                                    Месяц:
+                                    <input class="time-data__month-value input__item time-data__input" type="text" readonly>
+                                </div>
+                                <div class="time-data__day time-data__text">
+                                    День:
+                                    <input class="time-data__day-value input__item time-data__input" type="text" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section>
     
-    
-    <script src="js/main.js"></script>
+    <!-- <script src="js/main.js"></script> -->
 </body>
 </html>
