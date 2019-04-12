@@ -143,6 +143,7 @@
 
 div.result__item {
     color: #61a654;
+    overflow-x: hidden;
 }
 
 .time-data {
