@@ -1,3 +1,16 @@
+let startBtn = document.querySelector('#start'),
+    valueBox = document.querySelector('.result__table').querySelectorAll('div'),
+    dateBox = document.querySelectorAll('.time-data__input'),
+    expensesInput = document.getElementsByClassName('expenses__item'),
+    optionalExpensesInput = document.querySelectorAll('.optionalexpenses__item'),
+    expensesAccept = document.querySelector('.expenses__item-btn'),
+    optionalExpensesAccept = document.querySelector('.optionalexpenses__btn'),
+    countBudgetAccept = document.getElementsByClassName('count-budget__btn'),
+    incomeInpput = document.querySelector('.choose-income__item'),
+    savingsCheck = document.querySelector('#savings'),
+    savingsSumInput = document.querySelector('.checksavings__sum'),
+    savingsPercentInput = document.querySelector('.checksavings__percent');
+
 let appData = {
     budget: 0,
     date: '',
@@ -16,7 +29,9 @@ let appData = {
             (isNatural(month) && month <= 12) &&
             (isNatural(year)) &&
             (appData.date.length == 10) &&
-            (date.charAt(4) == '-' && date.charAt(7) == '-')) {
+            (date.charAt(4) == '-' && 
+            date.charAt(7) == '-') ) {
+            console.log(!!date);
             return 1;
         }
 
@@ -24,15 +39,21 @@ let appData = {
     },
 
     getDay: function () {
-        return +this.date.slice(-2);
+        if (!!this.date) {
+            return +this.date.slice(-2);
+        }
     },
 
     getMonth: function () {
-        return +this.date.slice(5, 7);
+        if (!!this.date) {
+            return +this.date.slice(5, 7);
+        }
     },
 
     getYear: function () {
-        return +this.date.slice(0, 4);
+        if (!!this.date) {
+            return +this.date.slice(0, 4); 
+        }
     },
 
     getBudgetPerDay: function () {
@@ -70,20 +91,6 @@ let appData = {
         }
 
         return budgetForMonth;
-    },
-
-    takeOptionalExpenses: function () {
-        let i = 0;
-
-        //expenses validation check
-        while (i == 0) {
-            let value = prompt('Статья необязательных расходов?', '');
-
-            if (!!value && appData.isZeroToTen(value))  {
-                this.optionalExpenses[this.optionalExpenses.length] = value;
-                i++;
-            }
-        }
     },
 
     isZeroToTen: function (value) {
@@ -167,44 +174,72 @@ let appData = {
         do {
             appData.budget = +prompt('Ваш бюджет на месяц?', '');
         } while (!isNatural(appData.budget));
+
+        valueBox[0].textContent = appData.budget;
     },
 
     takeDate: function () {
         do {
             appData.date = prompt('Введите дату в формате YYYY-MM-DD?', '');
         } while (!appData.validDate());
+
+        dateBox[0].value = appData.getYear();
+        dateBox[1].value = appData.getMonth();
+        dateBox[2].value = appData.getDay();
     },
 
     takeExpenses: function () {
-        for (let i = 0; i < 2;) {
-            let key = prompt('Введите обязательную статью расходов в этом месяце', ''),
-                value;
-        
-            if (!!key) {
-        
-                do {
-                    value = +prompt('Во сколько обойдется?', '');
-                } while (!isNatural(value));
-        
-                appData.expenses[key] = value;
-                i++;
+        let validation = 1;
+
+        for (let i = 0; i < expensesInput.length; i++) {
+            let key = expensesInput[i].value,
+                value = +expensesInput[++i].value;
+
+            if ( !(!!key && appData.isZeroToTen(key) && isNatural(value)) ) {
+                validation = 0;  
             }
+        }
+
+        if (validation == 1) {
+            let sum = 0;
+            Object.keys(appData.expenses).forEach(function(key) { delete appData.expenses[key]; });
+
+            for (let i = 0; i < expensesInput.length; i++) { 
+                appData.expenses[expensesInput[i].value] = +expensesInput[++i].value;
+                sum += +expensesInput[i].value;
+            }
+
+            valueBox[3].textContent = sum;
+        } else {
+            alert('Введены некорректные данные в полях с обязательными расходами');
         }
     },
 
-    takeInfo: function () {
-        this.startBtn = document.querySelector('#start');
-        this.valueBox = document.querySelector('.result__table').querySelectorAll('div');
-        this.dateInput = document.querySelectorAll('.time-data__input');
-        this.expensesInput = document.getElementsByClassName('expenses__item');
-        this.optionalExpensesInput = document.querySelectorAll('.optionalexpenses__item');
-        this.expensesAccept = document.getElementsByClassName('expenses__item-btn');
-        this.optionalExpensesAccept = document.getElementsByClassName('optionalexpenses__btn');
-        this.countBudgetAccept = document.getElementsByClassName('count-budget__btn');
-        this.incomeInpput = document.querySelector('.choose-income__item');
-        this.savingsCheck = document.querySelector('#savings');
-        this.savingsSumInput = document.querySelector('.checksavings__sum');
-        this.savingsPercentInput = document.querySelector('.checksavings__percent');
+    
+    takeOptionalExpenses: function () {
+        let validation = 1;
+
+        for (let i = 0; i < optionalExpensesInput.length; i++) {
+            let value = optionalExpensesInput[i].value;
+
+            if ( !(!!value && appData.isZeroToTen(value)) )  {
+                validation = 0;
+            }
+        }
+
+        if (validation == 1) {
+            let sumText = '';
+            Object.keys(appData.optionalExpenses).forEach(function(key) { delete appData.optionalExpenses[key]; });
+        
+            for (let i = 0; i < optionalExpensesInput.length; i++) {
+                appData.optionalExpenses[i] = optionalExpensesInput[i].value;
+                sumText += appData.optionalExpenses[i] + ' ';
+            }
+
+            valueBox[4].textContent = sumText;
+        } else {
+            alert('Введены некорректные данные в полях с необязательными расходами');
+        }
     }
 };
 
@@ -216,18 +251,15 @@ function isNatural(num) {
     return 0;
 }
 
+startBtn.addEventListener('click', function(event) {
+    appData.takeDate();
+    appData.takeBudget();
+});
 
+expensesAccept.addEventListener('click', function() {
+    appData.takeExpenses();
+});
 
-// appData.takeBudget();
-// appData.takeDate();
-// appData.takeExpenses();
-
-// appData.takeOptionalExpenses(); // Use when need to take optional expenses
-// appData.checkSavings (); //Use when need to set a month income from savings
-
-// appData.getBudgetPerMonth();
-// appData.getBudgetPerDay();
-
-// appData.chooseIncome();
-// appData.showIncome();
-// appData.showAllInfo();
+optionalExpensesAccept.addEventListener('click', function () {
+    appData.takeOptionalExpenses();
+});

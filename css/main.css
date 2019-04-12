@@ -76,6 +76,10 @@
     cursor: pointer;
 }
 
+.input__btn:focus {
+    outline: none;
+}
+
 .optionalexpenses__item {
     width: calc((100%/3) - 4px);
 }
@@ -135,6 +139,10 @@
     min-height: 40px;
     padding: 10px;
     font-weight: 500;
+}
+
+div.result__item {
+    color: #61a654;
 }
 
 .time-data {
